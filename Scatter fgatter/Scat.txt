@@ -1,0 +1,8 @@
+in scatter gatter is used for parallel processing of mule event the scatter gatter output will single java object with mule event denoting the routing 0= for first route
+and 1= second route
+
+output od scatter gatter is mule event which has payload and attriutes inside attributes there is headers such uri param query param
+
+note for paralel for each ouput will be mule message
+
+if error occurs then it will stop there itself to handle that we need to wrap error with try block on errror continuue

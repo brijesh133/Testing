@@ -1,0 +1,45 @@
+Salesforce it is used to insert the data into various object of salesforce
+salesforce connector confg is 
+username ,password,security token
+
+there are many operation in salesforce such as
+
+query it is used to retrieve the object in array with or without the condition
+query all:-it is used to retrieve the object in array with or without the condition also this will retrieve the deleted object which are present in recycle bin
+
+create the input should be the array of object and it will return the id with success=treu
+ex:-{
+    "id": null,
+    "items": [
+        {
+            "exception": null,
+            "message": null,
+            "payload": {
+                "success": true,
+                "id": "001GA00004w83GdYAI",
+                "errors": []
+            },
+            "id": "001GA00004w83GdYAI",
+            "statusCode": null,
+            "successful": true
+        }
+    ],
+    "successful": true
+}
+
+
+upsert: it will take array of object if we say contact we need to update or insert if update based on email or id if email present in payload then it will update if not insert 
+in salesforce it will insert and if we don't pass id itself then it will directly insert insted of error
+
+upsert if we don't pass key field also it will treat it as new record and insert in case of update if there is not id it will throw errro
+
+output will show response whether created:true if email not present if not present it will be created false and modify true
+
+update:- it will take an id only to update if id not passed it will throw error to pass id input is array of object
+
+on new object:it will keep on pooling the for new object if any object comes it will pool and value will be in payload as a java object, when we first insert a object 
+it will trigger on new object as well as on new modified also because it is newly created.
+
+on modified object:- it will trigger when new object is created and when object field is modified
+
+on deleted object

@@ -1,0 +1,171 @@
+
+{
+  "Emp1": {
+    "message": "Hello wo!",
+    "Adress": {
+      "street": "1"
+    }
+  },
+  "Emp2": {
+    "message": "Check!",
+    "Adress": {
+      "street": "2"
+    }
+  },
+  "Emp3": {
+    "message": "Thing world!",
+    "Adress": {
+      "street": "2"
+    }
+  }
+}
+
+
+%dw 2.0
+output application/json
+---
+payload groupBy ((value, key) -> value.Adress.street)
+
+Response:
+
+{
+  "1": {
+    "Emp1": {
+      "message": "Hello wo!",
+      "Adress": {
+        "street": "1"
+      }
+    }
+  },
+  "2": {
+    "Emp2": {
+      "message": "Check!",
+      "Adress": {
+        "street": "2"
+      }
+    },
+    "Emp3": {
+      "message": "Thing world!",
+      "Adress": {
+        "street": "2"
+      }
+    }
+  }
+}
+---------------------------------------------------------------------
+{
+  "E": {
+    "message": "Hello wo!",
+    "Adress": {
+      "street": "1"
+    }
+  },
+  "Emp2": {
+    "message": "Check!",
+    "Adress": {
+      "street": "2"
+    }
+  },
+  "E": {
+    "message": "Thing world!",
+    "Adress": {
+      "street": "2"
+    }
+  }
+}
+
+payload filterObject ((value, key, index) -> key~="E")
+
+
+{
+  "E": {
+    "message": "Hello wo!",
+    "Adress": {
+      "street": "1"
+    }
+  },
+  "E": {
+    "message": "Thing world!",
+    "Adress": {
+      "street": "2"
+    }
+  }
+
+
+}
+-----------------------------------------------------------
+{
+  "E": {
+    "message": "Hello wo!",
+    "Adress": {
+      "street": "1"
+    }
+  },
+  "Emp2": {
+    "message": "Check!",
+    "Adress": {
+      "street": "2"
+    }
+  },
+  "E": {
+    "message": "Thing world!",
+    "Adress": {
+      "street": "2"
+    }
+  }
+}
+
+payload mapObject ((value, key, index) -> (key):value) 
+
+{
+  "E": {
+    "message": "Hello wo!",
+    "Adress": {
+      "street": "1"
+    }
+  },
+  "Emp2": {
+    "message": "Check!",
+    "Adress": {
+      "street": "2"
+    }
+  },
+  "E": {
+    "message": "Thing world!",
+    "Adress": {
+      "street": "2"
+    }
+  }
+}
+
+payload map ((item, index) -> {
+    (item)
+})
+
+[
+  {
+    "message": "Hello wo!",
+    "Adress": [
+      {
+        "street": "1"
+      }
+    ]
+  },
+  {
+    "message": "Check!",
+    "Adress": [
+      {
+        "street": "2"
+      }
+    ]
+  },
+  {
+    "message": "Thing world!",
+    "Adress": [
+      {
+        "street": "2"
+      }
+    ]
+  }
+]
+

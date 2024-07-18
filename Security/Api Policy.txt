@@ -1,0 +1,51 @@
+In the first we will design the api and put into the exchange and for external organization use we will put into public portal.
+after design complete we will use that raml and put into studio and implemet the same now to apply the policy we need app id for that we go to api manager in anypoint 
+platform then in that we will create a api using auto discovery and will point to raml which is available in exchange after creating api we will get api instance id we will use that app
+id in the implemnetation using configuation of global element and put it in api discovery config we will put isntance id and select main flow name  after that will deploy to cloudhub usually for deploying to cloudhub we will put mule maven plugin configuation of cloudhub
+where we give anypoint url username ,password,business group, env and property of clientid and client credential to connect to api manager we will put this to github and by using jenkins we will deploy
+to cloudhub and from there it will deploy usually.
+After deployment is done in api manager the api will say active when api manager is connected to runtime. then we can apply the policy to api.
+some of the policy are client id enforcement:-
+this policy is used to secure the api means only registered client should access the api for that if any third party want to access our api they should send a request and from there they will get client id and
+client credential using they should call our api.
+
+Oath2.0:-
+when there is application to server interaction we use client credential grant in client credential grant type we first call authorization server from there we get the token and pass that token to 
+target server then target server will validate that token then it will allow to hit the target server.
+
+Note:- json web token will be encrytpted using private key of oath server and to validate in policy level we need to put jwks url inside the jwt validation which comes under security of policy of anypoint platform
+the jwks url consist public key of oath server using that it can decrpty it and compute the digest and can see whether payload is same or not if payload is same then
+data is not tampered it is used for data integrity
+
+To get the access token we need to pass client id,cleint secret,scope to token api then we will get access token access token consist of opache and jwt where jwt token
+doesn't need to check again with authorization server to validate the access token jwt itself can validate the access token by using the signature if signature is valid it will allow to hit the target server or endpoint
+
+basically while configuring jwt token in api policy we need to provide public key url of the auth server so that it can decrypt and can easily validate the token
+
+jwt token consist of a.b.c where a is algorthirm for encrption and b is payload and c is signature for generating signature what it will do is it will take payload and compute the digest and encrprty it using private key of auth servrr.
+now to decrypt at api policy level of anypoint playform it need public key of auth server what it will do is it will decrpt the signature using public key and it will the digest then it will compute the digest of payload if boh digest is same then
+that is valid token signature is used for data integrity means data if tampered we can get to know.
+
+
+
+---------------
+ssl handshake:-
+in ssl handshake client will send the https request to server server will reply with public certificate to cleint that pubic certificate should be present in client server of truststore
+after validating the cleint the cleint will snd session key encrpted with public key of seever and senf to server server will decrypt it with private key and it will key then using that key
+data exchange will happend i.e using same key data will be encrpted and decrypted from both server and client if cleint want to send data it should send with data with encrpted key same for server
+
+one way ssl and two way ssl
+one way ssl means client will request with https to server and server will give its public certificate and client shoulf have that cerrtificate in truststore then only handshake will happend and validation will happend.
+
+two way ssl client will snd https  request to server server will ask for public certifcate of cleint cleint will public certifcate from keystore and server will validate that certifcate from truststore
+then server will snd publci certificate and cleint will validate the public certifcate of server and connection will happen.
+
+note:-one way the client will verify the certificate of server in 2 way ssl client and server will validate the certificate.
+
+In Trust store and keystore 
+Trust store will hold the certificate of server so that it can validate the public certificate of server
+
+keystore key store will have the certificate of its own server where it will have alisa,private key,public certificate and password.
+
+Note:-if client wants validate other party certificate it will check in entry of truststore and if cleint wants to snd certificate it will snd from key store same for server also
+ 

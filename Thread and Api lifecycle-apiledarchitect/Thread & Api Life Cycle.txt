@@ -1,0 +1,50 @@
+Thread: it is use to do certain operation
+In mule there is thread
+cpu lite: it is used by component like logger and all other event processor scopes and routers it is aloso used to switch the thread between 2 component.
+cpu intensive:-it is used by datawieve transform and scripting modules
+blocking io:it is used by database module and component under transaction scope
+shared grizzly:-it is used by http listner
+dedicted grizzly:-it is used by http request
+
+The uber thread :-cpu lite,cpu intensive,blocking io
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Api Lifecycle:-
+
+Design:- 
+
+In the design phase we have 4 phase Design,simulate,feedback,validate
+-In the Design phase we will design api specification we will make a prototype of api
+--In simulate phase we will add request response and test the Api which was designed
+--In feedback phase customer will review and if necessary will ask to change filed name or etc according to that we will again repeat
+ the  design simulate feedback phase once customer is satisfied we will validate and go for next step of Development 
+---validate:-After feedback will validate that changes asper feedback is correct or not
+
+Implementation:-
+
+Build:we will build the actual implementation by using raml.
+
+test:- we will test whatever is build using postman.
+
+
+deployment:-
+secure
+deploy
+monitor
+troubleshoot
+manage
+
+--------------------------------------------------------------------------------------------
+Api Led connectivity
+
+Api led connedtvity is used for reusabilty of existing api instead of creating duplicate api
+
+there is 3 main layer
+1 system api: these api we can say asset to an organization because its connected to underlying system like salesforce,sap etc using mule request component it will
+call underlying system.
+
+2:process api this is the layer where business logic is written if suppose we need account details so we hit system api and use it also if any other module there
+they also need account details so instaed of hitting system api they can take use of process api which is already consume system api having account info
+
+3:Experience api is used when the enduser want json structure in different format so for that particular customer we can give that specific json structure so that we
+don't chnage any process api structure if we chnage process api structure json that structure is consumed from many vendors or customer so they will wrong response. for
+that experience api gives a specific structure to particular customer when there is nedd without chanfing the structire of proceess api.

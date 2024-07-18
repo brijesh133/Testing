@@ -1,0 +1,58 @@
+Munit is used to check the functinality it is used its not for performance testing
+
+inside munit Test there are behavoir ,exceution and validation
+
+if we are manulayy writing the test case then we need a component called set event where we can set the event with payload,attributes,error,variable to start a test case we need
+a set event
+
+validation is nothing but to validate the Actual result with expected result 
+
+ some of the compoent of validation are
+
+  1:-Asset equal take actal and expected value
+
+2:-Assert that which works with dw function and return matcher object some of the function 
+Expression :Actual payload comes from flow
+is :notnullvalue()
+is: null value()
+is:equalto()
+is:greaterthan
+is:greaterthanorequalto
+
+3:-Assert Expression : where we need to give expression 
+ Expression:-
+
+ payload must notbenull()
+ payload must beArray()
+ payload must equalTo()
+ payload must contain()
+
+4:verify call :-we can check that particular component in flow got exactly one call or not its basically test the call
+
+
+Behavoir:- in the behavoir section we will have like mock when and spy operation where mock will be used for instead of calling a component it will use its own value which
+will be specified in mock when
+ex: if a component is calling a database component if suppose is service down that does'nt mean test is failes so we will mock that and will use for sucees response
+
+spy is used to spy before the payload of execution of component and after exceution of component is as expected
+
+for mock and spy we need to choose the processor that means a database or transformation
+---------------------------------------------------------------------------------
+munit opration:set event,after test,before test,before suite,after suite and test
+munit tools operation:-assert equal,assert that,assert expression,verify call,spy.mock when
+
+working of before test and before suite:
+before test means it will run for each test in suite where as before suite it will run only once for whole test suite
+
+componet are
+behavoir,exceution,validation
+
+behavoir is used for mockwhen,spy
+exceution for set event and call flow reference
+validation is used to test expected value over actual
+
+
+
+
+
+

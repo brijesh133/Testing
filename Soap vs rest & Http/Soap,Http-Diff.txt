@@ -1,0 +1,69 @@
+Soap vs Rest:-
+
+1:-Soap is a simple object access protocol
+2:it uses message format as xml
+
+3:-Transport protocol supported HTTP,SMTP etc
+
+4:-Highly Secured
+
+5:Complex to read
+
+
+Rest:-
+1:-Rest is Representational State Transfer
+2:It uses message format json,xml,html etc
+3:Transport protocol :Http
+4:Less secured
+5:Easy to read
+
+
+Http vs Http
+
+1:-http:-Http is protocol which is used to communicate other system it is a lightweight protocol because
+ it does not have security i.e data will flow in the network without encryption aso the default port no is 80
+2:Https is also protocol but comes with one more layer of security i.e data in the network will be encrypted due to security layer its heavier then http, The default port no is 443
+
+
+Wsdl:-
+wsdl is a web service description language it is used to give api specification i.e input and output with the base uri and operation
+
+Wsdl has 
+
+<types>: What data types will be transmitted? (Nothing but schema defination input and output)
+<message>: What messages will be transmitted?  (its alias of request and response)
+<portType>: What operations will be supported?  (what all operation is there )
+<binding>: How will the messages be transmitted   (which protocol will be used for transfer http or smtp)
+ on the wire?
+<service>: Where is the service located?  (actual location of the service)
+
+abstract wsdl will have(type,message,porttype)
+concrete wsdl (binding,service)
+
+Http Status Code:-
+200:ok it will come when we are using get method and also used for put and post sometimes
+201:-Created mainly used for post request.
+202:-Accepted
+
+204:-No content
+
+---------------
+400: bad request
+401: unauthoried
+402: payment required
+403: forbidden
+404:not found
+405: method not allowed
+408:-request timeout
+415:-unsupported media type
+429:too many request
+
+------------------
+500 internal server error
+501 not implemented
+502 bad gateway
+503: service unreachabl
+504: gateway timeout
+
+Note:-Also See the Document of kishor for interview question on webservice and api
+

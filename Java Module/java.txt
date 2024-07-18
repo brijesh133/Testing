@@ -1,0 +1,10 @@
+java module is used to call java method static and non static method
+
+i have used invoke,invoke static and new
+
+invoke static: it will take class and method and we need to pass the argument in it
+
+invoke :- to call this we need to first create an object by using new component of java module and by using that we can call java method to call a java method without static
+one we need to give instance nothing but an object which we got from new component and we need to configure class name and method which is need to call.
+
+new:-new component is used to create an object for an particular class and that will be used to call an non static method of java class in another component i.e invoke

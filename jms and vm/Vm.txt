@@ -1,0 +1,16 @@
+Vm is nothing but a queue which is within the mule runtime this vm queue can be transient and persistance where transient means queue data will be vanished as soon as
+serever restrat where in persistent it will be availbe even if restrt of server is there
+
+there is multiple compoentn in vm
+
+publish it is used to publish the message into the queue its an asynchronous
+
+publish and consume its a synchronous way as soon msg is publish it will wait until the queue is consumed by listner as soon queue is consumed if payload is chnaged in
+ consume then that payload will be vailable in response of publish consume also 
+
+consume: it is used to consume a message on demand
+
+listner it will keep on pooling the queue for any new message if any new message comes in queue it will consume.
+
+
+

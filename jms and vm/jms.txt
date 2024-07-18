@@ -1,0 +1,31 @@
+jms is used queue mechanism it basicly external queue like active mq and its not that much reliable compare to vm queue
+
+in jms there are 2 types queue and topic
+
+queuue: it is used you want a only person to subscribe your msg like in whats app we send msg to particular no so that no is nothing but a queue
+
+topic: it is nithing but n no consumer can consume the message like when we are sending msg to group in whats app so that msg will be consume from differet person in the group
+
+
+publish: it is used to publish the message in the queue or topic
+
+publish cosume :- it will publish the message and wait for any consumer consume that message and revert back after consume its an synchronous apporcah
+
+note when publish message in publish consume the request reply pattern should be correlation id and reply can be given as any other queue whoever consume that message 
+that consumer should reply with coreelation id to that reply queue.
+
+
+consume:it is used to consume the message on demand
+
+on new message:-it is used to pool the message from a particular queue its kind of listenr.
+
+Note:-
+Timeout:-
+timeout: publisb consume:- after publish message if timer is set 5 second that publsihd consume will wait for 5 second to that reply to queue for response if no 
+response that error timeout
+
+consume:-it will look for the queue when called consume for 5 second if still after calling there is no msg then timeout error
+
+jms configuration:-
+
+to confifure jms we need jars then we need to give username and password then we need to give broker url of active mq in connection factory of factory configuration:(edit inline)

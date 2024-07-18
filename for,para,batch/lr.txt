@@ -1,0 +1,108 @@
+1:for:- for each is used to iterate over the element input should be array and output of for each is the original payload ,payload will not change after any change during
+for each process if we want that payload to be exist we need to create a variable and concat to it if any error comes then there itself for each will stop processing.
+
+ex:
+
+if we want to add an object inside an array then
+a=[{name:b},{name:c}]
+b={name:d}
+
+to add an elemt inside an array we use a + b
+
+if we want to concat one object with another then use ++
+
+var a={name:"b"}
+var b={name:"d"}
+
+to concat single object a++b   
+result
+{
+  "name": "b",
+  "name": "d"
+}
+
+if we want to add an array inside an array using +
+%dw 2.0
+output application/json
+var a=[{name:"b"},{name:"c"}]
+var b=[{name:"d"}]
+
+---
+a + b
+output:-
+[
+  {
+    "name": "b"
+  },
+  {
+    "name": "c"
+  },
+  [
+    {
+      "name": "d"
+    }
+  ]
+]
+
+
+if we want to add an array inside an array using ++
+%dw 2.0
+output application/json
+var a=[{name:"b"},{name:"c"}]
+var b=[{name:"d"}]
+
+---
+a ++ b
+output:-
+[
+  {
+    "name": "b"
+  },
+  {
+    "name": "c"
+  },
+  
+    {
+      "name": "d"
+    }
+  
+]
+
+++ is used to concat into the array or object + is use to add into existing one with whole object.
+
+
+---------------------------------------------------------------------------------------------
+paralell for each: parallel for each is used to parallel process the elment for faster processing if any error occurs in between it will still process other records.
+number element/object equal to number of thread so each thread exceute indipendently if we create an variable inside the parallel for each that value not be available 
+outside the parallel for each also output of parallel for each will be mule message in sequential order and it will modified payload
+
+in order to access payload is payload.payload
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+batch processing:-
+
+The batch processing is used for processing the record in batch wise there are mainly 3 phase
+1:load and dispatch
+2:process record
+3:oncomplete
+
+2:-inside process record there can be n number of steps and steps consist of processor  and aggregrate each step can take record based on condition like all,only failure,no failure
+
+load and dispatch is used to iterate over the list of element and put each element or record inside the record queue from record queue process record will take each record and process.
+
+process record will process each record from queue and put back to queue keeping status as step one complete next if same record comes then it will see status that
+step1 is complete or not if complete it will give to step 2 to process.in step there is an aggregrate option where it will aggregrate size of record mainly it is used to
+bulk insert instead of single insert.
+
+process record will process each record from record queue which was putted by load and dispatch phase also after processing each record that record will put back to
+queue by setting status as step 1 complete also there is an access policy where no failure ,only failure, all will be there, in aggregrate we can use that for bulk insert
+because it will aggregrate the record by size like 10 or 30 record whenever there is 30 record in step 1 of aggregate it will execute 
+
+if we define a variable in step1 each thread/ will access that variable and in next step if we try to access that variable it will access
+the main thing is each element will store each variable inside it will a value and in next step that variable will work according to element variable.
+
+oncomplete phase:- it will be a batchjob object where it will show how many record fail and passed
+
+I have to insert 20 records and i have a batch block size of 5 then how many threads needed to insert the 20 records in batch processing?
+ans:-It will be 4 Threads. Each of size 5 as the batch size or i can say the Aggregator or Commit size is 5.

@@ -1,0 +1,278 @@
+trait :-trait is a reusable asset common properties of method triat can have security schema,headers,queryparam and response code,description
+
+we declare trait by
+trait:
+ first:qry: !include /Trait/trait.raml
+
+
+ post:
+    is: [res]
+
+we call using is
+------------------------------------------------------------------------
+Resorce Type:- resource type come into picture when thre is 2 type of collection, collection resources and collection item resources ,resource type is a template where few values are dynamic such as type will be dynamic ,it is notjing but common properies of resource
+
+resourceTypes:
+  collection: !include /Trait/trait.raml
+
+/restureent:
+ type: collection 
+ get:
+
+
+
+now whatever is template for get method will be come. to call resource type we use "type" inisde the /restuarent
+----------------------------------------------------------------------------------
+library:
+library is a collection of datatype,trait,security schema,resource type it can be called by using uses: keyword and can refer to a type by using . notation
+
+ex:
+
+uses:
+ name: path
+
+
+
+------------------------------------------------------------------------------
+libarary file:-
+
+trait:
+ first:
+   queryParameters:
+      id:
+        type: number
+        required: false
+        default: 4434
+
+types:
+ ordertype:
+   properties:
+      id:string
+      name:string
+      address:
+            type:array
+            properties:
+              addresssline:4
+
+--------------------------------------------------------------------------------------
+
+
+root raml
+-----------------------
+uses: 
+  orderlib: /pathof libabry
+
+/rest:
+ get:
+  is[orderlib.first]
+ post:
+  type: orderlib.ordertype
+----------------------------------------------------------------------------------
+End of Library
+
+--------------------------------------------------------------------------
+Datattype:-
+
+Types: it is used to import the datatype where type is used to call datatype and type is used to call the datatype inside the method
+
+ex:-
+types:
+  rest: !include /datatype/dataType.raml
+  req:  !include /datatype/Rest_Request.raml 
+
+
+/restuarent:
+  post:
+    body:
+      type: array
+      items: req
+
+     or
+      type: req[]-----------------------if we want use single array in one line instead of using items items is used for list of properties
+    
+responses:
+      200:
+        body:
+          type: array
+          items: rest
+
+
+we have to define the datatype in file for ex:
+
+#%RAML 1.0 DataType
+
+type: !include /datatype/Rest_Request.raml
+
+properties:
+  id: integer
+
+example: !include /exampleprop.raml
+|
+|
+\/ -
+content:
+-#%RAML 1.0 NamedExample
+value:
+  name: "briju"
+  address:
+  -  
+    addressline1: "00"
+    addressline2: "998"
+  id: 1
+
+-----------------------------------------------------------------
+!include /datatype/Rest_Request.raml
+
+#%RAML 1.0 DataType
+type: object
+
+properties:
+ name?: string
+ address:  
+    type: array
+    items: !include /datatype/Adress.raml
+
+----------------------------------------------------------------------
+!include /datatype/Adress.raml
+
+#%RAML 1.0 DataType
+
+type: object
+
+properties:
+  addressline1: string
+  addressline2: string
+-----------------------------------------------------
+
+!include /exampleprop.raml
+
+
+#%RAML 1.0 NamedExample
+value:
+  name: "briju"
+Array:-
+  address:
+  -  
+    addressline1: "00"
+    addressline2: "998"
+  id: 1
+
+
+or
+#%RAML 1.0 NamedExample
+value:
+  name: "briju"
+Object:-
+  address:
+    addressline1: "00"
+    addressline2: "998"
+  id: 1
+-----------------------------------------
+securitySchemes:
+  sec:
+    type: Basic Authentication
+
+securedBy:
+  - sec
+
+secureBy can be used inside the particular resource or method by using secured by alos we can use secureby in trait also to avoid using again and again
+
+also we can define security schema in different file inside it is
+ex:-Security schema file
+
+#%RAML 1.0 SecurityScheme
+type: Basic Authentication
+---------------------------------------
+Ex:-root raml to include security file:-
+
+securitySchemes:
+  sec: !include /securityScheme.raml
+-------------------------------------------------------------------------------------------------------------------------------------
+EX:- get:
+    is: [qry]
+    headers:
+      Api:
+        type: string
+
+    body:
+      type: test
+    responses:
+      200:
+        body:              
+          example: !include /Response/Fetch_Student.json
+          
+  post:
+    is: [res]
+    body:
+          example: !include Request/Request_Student.json
+          type: !include /Datatype/dataType.raml
+
+
+    responses:
+      201:
+        body:
+          example: !include Response/Student_Response.json
+
+
+Structure is
+
+raml version first
+base uri
+
+then we will find out how much resource path and for that how many methods ex restuarents
+
+then restaturent resiurce path
+post method
+will decalrae headers if there
+then will declare body request
+then the responses status code 
+--------------------------------------------------------------------------------
+inside the method we can have 
+get:
+ description
+ headers
+ body
+ responses
+ 201: 
+  body:
+   example:
+{
+json
+}
+----------------------------
+resource type
+
+get:
+ description:" "
+ headers:
+  id:
+   type
+ body:
+  type: 
+ responses:
+  200:
+   body:
+    example:{
+   }
+-----------------------------------
+
+inside library there can be multiple trait or types declare inside it and to access it we will uses library variable using that library variable we can access particular trait or types
+#%RAML 1.0 Library
+traits:
+  ord:
+    queryParameters:
+      id:
+        type: integer
+  check:
+    queryParameters:
+      id:
+        type: integer
+
+types:
+  sec:
+   properties:
+     id: string
+  rec:
+    properties:
+      cm: string
+  

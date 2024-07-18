@@ -1,0 +1,21 @@
+for sla there is 2 thing
+
+rate limiting and sla based rate limiting service level agreement
+
+we can apply sla for the api in api manager we can create multiple sla tier like in 1 min 10 request can come for gold tier and another with silver tier will take 5 request
+in 1 min so according client can opt for sla tier based on payment they do
+
+
+differnece between rate limiting and sla rate limitng
+
+rate limiting is nothing is to give restricion to cleint so that server does'nt crash the server
+
+rate limit vs sla besed
+
+rate limiting if we apply policy then that policy will be for all client and if we apply sla rate limting we can specify the no of request for a particular cleint based
+on sla tier they have choosed when we apply sla tier it will come up with client id enforcement where we need to pass cleint id and cleint secret so that sla tier
+policy can understand for that particualr client id how many request is allowed asper choosed sla tier while requesting access for api.
+
+
+if we want to apply a common policy to all api then we can used automated policy where we can define policy once and whenver we create an api
+it will take that automated polcicy so that no need to add default policy again for all api again and again

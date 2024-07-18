@@ -1,0 +1,14 @@
+whenever we are calling a request component at that we can get a status code and payload of third party api when error occurs we can get status code and payload by usnin
+below expression error.muleMessage.payload to get a payload, where as to get status code we can use error.muleMessage.attributes.statusCode
+
+also we can configure the status code for error and success response by creating a variable in like vars. http and set that with required status code and in http listener
+response keep that variable name. same for success follow same.
+
+if in scatter gatter we get error it will stop there itself also if there is any variable inside scatter gatter and error occurs then when it throws error at that time
+varible will be deleted only payload will be there which was before scatter gatter processing if we use on error continue at that variable will exist because on error
+continue act as nothing happend and variable will be there which was declared in scatter gatter.
+
+if we want to show error of scatter gatter only way is to use on error continue and set the payload of error.discription or error.mulemessage.payload. so that when final
+output is ready for that route it will show error message
+
+the variable which is declare outside the scatter gatter will exist even after on error propagate is there in scatter gatter for handling error. 

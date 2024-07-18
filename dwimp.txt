@@ -1,0 +1,544 @@
+--------------------------------------
+
+use of replace it will take input as string
+
+%dw 2.0
+import * from dw::core::Dates
+output application/json
+var myDateTime = today()
+---
+//before replace "2024-07-16"
+replace(myDateTime,'-') with("/")
+
+//after replace "2024/07/16"
+-----------------------------------------------------
+date example:
+
+if date is just a string and that date is in the form of datetime then for that we will first use as DateTime then will apply as String then we will
+use format
+ex var myDateTime="2020-11-10T13:44:12.283-08:00"
+
+now we should convert it to date time
+
+which is var myDateTime="2020-11-10T13:44:12.283-08:00" as DateTime
+
+now we can put as string and put format
+
+ex myDateTime as String {format:"yyyy/mm/dd"}
+
+total ex:
+---------------------------------------------------------------code--------------------for date---------------
+%dw 2.0
+output application/json
+var myDateTime = "2020-11-10T13:44:12.283-08:00" as DateTime
+---
+myDateTime as String {format:"yyyy/MM/dd"}
+---------------------------------------------------Now functon in date-------------------------------------------------------------------
+now() this will be used when we want to get date and time since its in date function so if we want a format then just we will as as String
+
+now() as String{format:'yyyy/MM/dd'
+
+-------------------------------------------Changing time zone for now function--------------
+
+{
+    now: now() as String { format: "yyyy-MM-dd'T'HH:mm:ss" },
+    nowToBerlin: (now() >> "Asia/Kolkata") as String { format: "yyyy-MM-dd'T'HH:mm:ss" }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------
+in order get the value with key we use .&
+
+Ex:
+Input:-[{
+  "name":"hello",
+  "lastname":"byee"
+},
+
+{
+  "name":"bii",
+  "lastname":"poo"
+}
+]
+
+Expression:-payload map( (item,index)->
+    item.&name
+)
+
+Output:-
+[
+  {
+    "name": "hello"
+  },
+  {
+    "name": "bii"
+  }
+]
+------------------------------------------------------------------------------
+2:- To reverse there is 2 ways.
+
+payload.name[-1 to 0]
+
+or
+
+using reverse function it will always take string as input
+
+reverse("hello")
+
+------------------------------------------------------------------------------
+
+3:-splitBy(text: String, regex: Regex): Array<String>
+Splits a string into a string array
+
+input:-"hello world" splitBy(" ")
+output:-[
+  "hello",
+  "world"
+]
+
+--------------------------------------------------------------------------------
+4:joinBy(elements: Array<StringCoerceable>, separator: String): String
+
+it takes array of string and merges into a single string
+
+input:-[1,2,3,4]joinBy("-")
+output:-"1-2-3-4"
+---------------------------------------------------------------------------
+5:-Array map(item,index):array
+
+Iterates over list of items in an array and outputs the results into a new array.
+
+input:[{
+  "name":"hello",
+  "lastname":"byee"
+},
+
+{
+  "name":"bii",
+  "lastname":"poo"
+}
+]
+-payload map(item,index)->(index):item.name
+output:-[
+  {
+    "0": "hello"
+  },
+  {
+    "1": "bii"
+  }
+]
+
+----------------------------------------------------
+6:-
+
+It will take object as input and return object it is used to iterate over the key value pair.
+myData mapObject ((value, key, index) -> (key):value)
+input:-{
+  "name":"hello",
+  "lastname":"byee"
+}
+expr:-payload[0] mapObject ((value, key, index) ->(upper(key)):value )
+output:-{
+  "NAME": "hello",
+  "LASTNAME": "byee"
+}
+-----------------------------------------------------------------------------------
+7:-distinctBy<T>(@StreamCapable items: Array<T>, criteria: (item: T, index: Number) -> Any): Array<T>
+
+Iterates over the input and returns the unique elements in it.
+
+input:var pay=["a",2,3,4,5,7,7,"b"]
+expr:-pay distinctBy(item,index)->item
+output:-[
+  "a",
+  2,
+  3,
+  4,
+  5,
+  7,
+  "b"
+]
+-------------------------------------------------------------------------------------------
+8:-filter:-
+It will take array input and return array asper match condition
+input:-[
+  
+    {"Customer": {
+      "Number": "1",
+      "FirstName": "Fred",
+      "LastName": "Landis",
+      "Address": {
+        "Street": "Oakstreet",
+        "City": "Boston",
+        "ZIP": "23320",
+        "State": "MA"
+      }
+    }
+    },
+    {
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Michelle",
+      "LastName": "Butler",
+      "Address": {
+        "Street": "First Avenue",
+        "City": "San-Francisco",
+        "ZIP": "44324",
+        "State": "CA"
+      }
+    }
+    },
+    {
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Ted",
+      "LastName": "Little",
+      "Address": {
+        "Street": "Long Way",
+        "City": "Los-Angeles",
+        "ZIP": "34424",
+        "State": "CA"
+      }
+    }
+    }
+
+]
+Expr:payload filter ((item, index)->item.Customer.Address.State=="CA")
+Out:-[
+  {
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Michelle",
+      "LastName": "Butler",
+      "Address": {
+        "Street": "First Avenue",
+        "City": "San-Francisco",
+        "ZIP": "44324",
+        "State": "CA"
+      }
+    }
+  },
+  {
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Ted",
+      "LastName": "Little",
+      "Address": {
+        "Street": "Long Way",
+        "City": "Los-Angeles",
+        "ZIP": "34424",
+        "State": "CA"
+      }
+    }
+  }
+]
+-------------------------------------------------------------------------------------
+9:-orderBy:-it will take array and return in the array in reordered way
+
+Input as above
+Expr:-payload orderBy ((item, index) -> -item.Customer.Number )
+
+Outpiut:-[
+  {
+    "Customer": {
+      "Number": "3",
+      "FirstName": "Ted",
+      "LastName": "Little",
+      "Address": {
+        "Street": "Long Way",
+        "City": "Los-Angeles",
+        "ZIP": "34424",
+        "State": "CA"
+      }
+    }
+  },
+  {
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Michelle",
+      "LastName": "Butler",
+      "Address": {
+        "Street": "First Avenue",
+        "City": "San-Francisco",
+        "ZIP": "44324",
+        "State": "CA"
+      }
+    }
+  },
+  {
+    "Customer": {
+      "Number": "1",
+      "FirstName": "Fred",
+      "LastName": "Landis",
+      "Address": {
+        "Street": "Oakstreet",
+        "City": "Boston",
+        "ZIP": "23320",
+        "State": "MA"
+      }
+    }
+  }
+]
+
+Also orderby can take object also ex:
+input is object and ouput is reorders object based on condition
+{
+    "Customer": {
+      "Number": "1",
+      "FirstName": "Fred",
+      "LastName": "Landis",
+      "Address": {
+        "Street": "Oakstreet",
+        "City": "Boston",
+        "ZIP": "23320",
+        "State": "MA"
+      }
+    }
+    ,
+    
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Michelle",
+      "LastName": "Butler",
+      "Address": {
+        "Street": "First Avenue",
+        "City": "San-Francisco",
+        "ZIP": "44324",
+        "State": "CA"
+      }
+    }
+    ,
+    
+    "Customer": {
+      "Number": "3",
+      "FirstName": "Ted",
+      "LastName": "Little",
+      "Address": {
+        "Street": "Long Way",
+        "City": "Los-Angeles",
+        "ZIP": "34424",
+        "State": "CA"
+      }
+    }
+    
+
+}
+expr:-payload orderBy ((value, key) -> -value.Number )
+
+oup:-{
+  "Customer": {
+    "Number": "3",
+    "FirstName": "Ted",
+    "LastName": "Little",
+    "Address": {
+      "Street": "Long Way",
+      "City": "Los-Angeles",
+      "ZIP": "34424",
+      "State": "CA"
+    }
+  },
+  "Customer": {
+    "Number": "2",
+    "FirstName": "Michelle",
+    "LastName": "Butler",
+    "Address": {
+      "Street": "First Avenue",
+      "City": "San-Francisco",
+      "ZIP": "44324",
+      "State": "CA"
+    }
+  },
+  "Customer": {
+    "Number": "1",
+    "FirstName": "Fred",
+    "LastName": "Landis",
+    "Address": {
+      "Street": "Oakstreet",
+      "City": "Boston",
+      "ZIP": "23320",
+      "State": "MA"
+    }
+  }
+}
+---------------------------------------------------------------------------------------------
+10:-Pluck
+
+It will take input as object and return array of key or value also it is used to convert from object to array.
+
+input:{
+    "Customer": {
+      "Number": "1",
+      "FirstName": "Fred",
+      "LastName": "Landis",
+      "Address": {
+        "Street": "Oakstreet",
+        "City": "Boston",
+        "ZIP": "23320",
+        "State": "MA"
+      }
+    }
+    ,
+    
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Michelle",
+      "LastName": "Butler",
+      "Address": {
+        "Street": "First Avenue",
+        "City": "San-Francisco",
+        "ZIP": "44324",
+        "State": "CA"
+      }
+    }
+    ,
+    
+    "Customer": {
+      "Number": "3",
+      "FirstName": "Ted",
+      "LastName": "Little",
+      "Address": {
+        "Street": "Long Way",
+        "City": "Los-Angeles",
+        "ZIP": "34424",
+        "State": "CA"
+      }
+    }
+    
+
+}
+Expr:-payload pluck ((value, key, index) -> {(key):value})
+Out:-[
+  {
+    "Customer": {
+      "Number": "1",
+      "FirstName": "Fred",
+      "LastName": "Landis",
+      "Address": {
+        "Street": "Oakstreet",
+        "City": "Boston",
+        "ZIP": "23320",
+        "State": "MA"
+      }
+    }
+  },
+  {
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Michelle",
+      "LastName": "Butler",
+      "Address": {
+        "Street": "First Avenue",
+        "City": "San-Francisco",
+        "ZIP": "44324",
+        "State": "CA"
+      }
+    }
+  },
+  {
+    "Customer": {
+      "Number": "3",
+      "FirstName": "Ted",
+      "LastName": "Little",
+      "Address": {
+        "Street": "Long Way",
+        "City": "Los-Angeles",
+        "ZIP": "34424",
+        "State": "CA"
+      }
+    }
+  }
+]
+------------------------------------------------------------------------------
+
+11: array to object:-
+{
+(payload)
+}
+------------------------------------------------------------------------
+12:-flatten it is used to make single array from array of array.,Turns a set of subarrays 
+(such as [ [1,2,3], [4,5,[6]], [], [null] ]) into a single, flattened array (such as [ 1, 2, 3, 4, 5, [6], null ]).
+flatten<T, Q>(@StreamCapable items: Array<Array<T> | Q>): Array<T>
+
+it takes input as array of subarrays and retuns a single array
+expr:-flatten(array of subarray)
+------------------------------------------------------------------------------------------
+0:Example using filter and distinct by removing the same customer number
+Input:-[
+  
+    {"Customer": {
+      "Number": "1",
+      "FirstName": "Fred",
+      "LastName": "Landis",
+      "Address": {
+        "Street": "Oakstreet",
+        "City": "Boston",
+        "ZIP": "23320",
+        "State": "MA"
+      }
+    }
+    },
+    {
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Michelle",
+      "LastName": "Butler",
+      "Address": {
+        "Street": "First Avenue",
+        "City": "San-Francisco",
+        "ZIP": "44324",
+        "State": "CA"
+      }
+    }
+    },
+    {
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Ted",
+      "LastName": "Little",
+      "Address": {
+        "Street": "Long Way",
+        "City": "Los-Angeles",
+        "ZIP": "34424",
+        "State": "CA"
+      }
+    }
+    }
+
+]
+
+Expr:-(payload filter ((item, index)->item.Customer.Address.State=="CA")) distinctBy ((item, index) -> item.Customer.Number )
+
+OUT:-[
+  {
+    "Customer": {
+      "Number": "2",
+      "FirstName": "Michelle",
+      "LastName": "Butler",
+      "Address": {
+        "Street": "First Avenue",
+        "City": "San-Francisco",
+        "ZIP": "44324",
+        "State": "CA"
+      }
+    }
+  }
+]
+----------------------------------------------------------------------------------------------
+multi line function
+fun abc(str) = do{
+  var c=upper(str)
+  ---
+  c  
+}
+
+---
+abc("hello")
+-----------------------------------------
+normal function
+fun abc(str) =
+upper(str)
+
+
+
+---
+abc("hello")

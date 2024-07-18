@@ -1,0 +1,30 @@
+Day 09 redilvery
+
+In the reliability pattern it is used for no data/message loss
+
+until succesfull is used there is chaces of unstable server so we will put under the scope of until successfull and give retry attempt and delay between retry if it
+fails after retry then it will give error
+until succesfully is used to run the flow until its successfiull by giving max retry and delay between the retry when its fails
+
+reconnection strtegy :- if suppose connection issue is there to connected to database or any this strategy make sure it retry to create connection for speffied no of times
+given in  max entries and deplyas between it
+
+NoteL-difference between until success and reconnection strategy is if we click the checbox fail while deployment also it reconnection strategy will check that during deployment whether able
+to connect database or not also it will check after deployement also connection able to establiish or not
+
+redilvery policy :- it used in mainly listner of jms where if in flows get error in component anywhere it should deliver the same message again by spefied time and delay in connector of jms
+and to make sure complete flow executes once we use transaction so that either meesage should be commited or no message should be commited.
+
+
+Transaction:- when any component supports transaction it makes sure message are not lost any where
+
+
+Note:what if after redilvery of message reach to max at that time message will be loss for that we need snd jms message publish in the form of persistent message 
+so that after max redilvery persistent make sure that message should move dead letter queue so that message cannot be lost by sending in the form persistent message.
+
+
+we use Acquisition flow and processing flow we use in reliability pattern for no meesaage loss.
+
+it means when client sends a data it shoulf not be loss the http listener source event should pass the message to jms queue and processing flow will execute business logic
+connecting to database and other if third party system is there and it is down we will use transaction so that either the whole s commited or no commit is happened in flow
+so there will be no message loss and message will move dead letter queue and can be porcesssed later.

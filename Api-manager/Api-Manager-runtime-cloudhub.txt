@@ -1,0 +1,37 @@
+why api manager
+
+Api manager is used to put the security to the api from directly accessing the actual implementation by using policy as basic auth, oath2.0 client id enforcement.
+
+how api manager works with auto discovery:
+
+first we design the api in design center then put it to exchange for viewing that api to organization level if third party wants to access the api then we need to share
+the api in public portal where they can see the api without loging in if they want a prototype to run that api then we have to mock after that we implement that design
+in studio level then to apply the policy we make api auto discovery config for that we need a api instance id to get that instance we have to create api in i=api manager 
+select mule galteway and select auto discovery option then will get instnace id that instance we put in implementation and deploy to server after deploying api manager
+will become active and then we can add policy
+
+if we apply client id enforcement then in exchnage we have to make instace of service to public so that third party can request for api and get client id and secret
+for organnization no need of making instnace public
+
+why proxy?
+
+proxy runtime was used in early time because for not accessing the resource server proxy server will act like a restricting agent
+
+
+why runtime and runtime manager?
+
+runtime is used to run the mule application inside it, it runs under the java runtime jvm which is controlled by java service wrapper because that wrapper keep on
+checking the runtime for any issue if runtime fail wrapper service will make sure that will be restarted.
+
+
+runtime manager :- runtime manager is used deploy, stop or start the application, undeploy the mule application over there we can also add standalone server and manage that like restart stop and start,
+
+
+cloudhub:- cloudhub is an mule cloud which uses aws infrastructure to manage the application cloudhub makes sure that whenever a mule jar is comming it should be
+deployed under jvm with mule runtime inside it and make sure if anything goes a new runtime with same facility should will be provided cloudhib inside have virtual private
+cloud where different subnets there inside that vm are there also a lb is there to route to the correct request.
+
+
+mule jar-----------
+mule runtime-------------   Structure of vm at up jar below mule runtime and java 
+Java------------------

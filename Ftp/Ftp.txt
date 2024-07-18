@@ -1,0 +1,17 @@
+in ftp configuation is
+
+username,
+password,
+host,
+port default 21,
+
+Also there will be working directory where root directry can be given
+this is the part of configiation
+
+on new or updated file 
+
+we can give directory where the actual files is present also if we want to read a .csv file only then in matcher we need give filename pattern as *.csv
+
+
+in ftp read operation it is used to read the file configuration will be same but in read configuarion we will be give filepath where we want to read a file to read only
+csv "?.csv"

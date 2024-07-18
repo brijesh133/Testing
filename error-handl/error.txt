@@ -1,0 +1,23 @@
+1:-in a flow if an error occurs and if there is no error handler then mule default error handler will be used the mule default error handler will execute and logs the error
+information
+
+2: when an error is thrown an error object created 2 of the properties is error.description type:-string and error.errortype type of object.
+
+Error handling scope:
+
+1:-on error propagatee:- whenever the error is there in flow it will stop exceuting the next processor and on propagte error handler will handle the error by excuting event 
+processor inside the on error propagate if the error in in sublow or private flow on propagte error will throw the error to next level to calling flow i.e main flow
+2:-on error continue whenever the error is there in flow it will stop exceuting the next series and it will be handlled in eror continue and it will give response as 200 k
+behaving as notjing is happend. if error occur in sublow then it will stop excuting that flow it will come to on error continue and that control go to main flow the flow 
+ will think as nothinh has happend it will excute the next event processsor and give success response.
+
+3:- we can create our own custom error by mapping error and specfying the namespace always as APP, this will be used to distinguish for which component error is coming
+
+---------------
+
+1:-You can aslo create one single error handler for every flow by draging error handler and setting the global element configuration mapping to error handler flow.
+
+1:In a flow if there is no error handler at that it will be handle by global error handler.
+
+2:-if in a flow there is an error handler which match or don't match to aprticular error message it will execute only default error handler of mule
+

@@ -1,0 +1,22 @@
+
+org.mule.runtime.core.internal.message.DefaultMessageBuilder$MessageImplementation
+{
+  payload=org.mule.runtime.core.internal.streaming.bytes.ManagedCursorStreamProvider@185d412a
+  mediaType=text/html; charset=UTF-8
+  attributes=org.mule.extension.http.api.HttpResponseAttributes
+{
+   Status Code=405
+   Reason Phrase=METHOD NOT ALLOWED
+   Headers=[
+      date=Wed, 03 Jul 2024 11:33:06 GMT
+      content-type=text/html
+      content-length=178
+      connection=keep-alive
+      server=gunicorn/19.9.0
+      allow=GET, HEAD, OPTIONS
+      access-control-allow-origin=*
+      access-control-allow-credentials=true
+   ]
+}
+  attributesMediaType=*/*
+}

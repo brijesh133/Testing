@@ -1,0 +1,77 @@
+Transaction is nothing but either all transaction shoul be completed or no transaction should be complete
+it uses ACID properties
+----------------------------------
+
+Transaction is used in which module:- its is used in database ,jms,vm
+
+Transaction Type : local and xa(Extended architecture)
+
+local type of transaction is used when an operation inside the transaction uses same configuraion single resource where database we say we use only one database mysql not an orcale
+
+xa:Bitromix Transaction management its used when there is multiple resource such as connected to different database ,vm ,jms in one transaction we go for xa its basically 2 way commit protocal
+-----------------------------------------------------------------
+
+Transaction action
+
+try:-always begin,begn or join,indifferenr (should not consider as transaction) 
+
+listner: none, always begin
+
+operation:-not supported,aways join,join if possible
+
+-------------------------------------------------------------------------
+modules which support transaction are
+
+listner of vm:listener
+listner of jms:on new message
+listner of database:-on table row
+
+operation in database:all operation
+
+operation in vm all operation
+
+operation in jms: all except punlish consume.
+------------------------------------------------------------------------------
+scope behaviour in Trabsction
+
+Async scope doesnt support,
+until succesfull will support transaction
+paralel for each will supprt transaction it will not exceute in parallel it will work like for each it will process after the first one has processed
+
+batch processing does'nt support batch processing
+
+scatter gatter suppport the transaction but it will process in sequential manner not in parallel manner in transaction
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+working of xa type transaction:
+
+bitronix transaction management
+       |
+       |
+_____________________________________________
+|                                             |
+|                         
+|                                        
+                                               resoure manager for jms/vm
+resource|
+manager|
+database|
+________
+  
+Bitronix uses 2 way commit protocol i.e prepare and commit
+in the above if transaction in xa is manage by bitronix transaction where if bitronix says that if start to commit what resouce manager of both database and jms will do is
+they will start to prepare a temp file and there it will write all the chnages that need to be done in commit and and after that it will commit if suppose the resource manager
+of jms is down then transaction will stop it will wait unitl its up when its up it will fetch the temp file of resource mamager jms and commit again so this is a 2 way process
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+transaction in flows if suppose there is database and vm and transaction is in xa type then until that flow has no error it will not insert the data in database and publish
+the data to queue until that transaction is successfully after that transation is successfully then only data will publish and commited to database if in transaction any component
+fails then data will not be publish or database data will not be commited if transaction fails.. even if transaction fails then also we need to commit then we can use
+error handler by using on error continue compoment so transaction is successfull even if errror is there and if use on error continue then it means transaction
+is success if we want error and it should be transaction error then use on error proprogate.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+

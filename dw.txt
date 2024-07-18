@@ -1,0 +1,105 @@
+calling a flow in dw:-
+
+using lookup we can call the flow..
+ex:-lookup("flow name",payload)
+
+in another flow if we want to access the payload then 
+ex message.payload
+
+a flow can return a response so in dw response
+
+dw
+
+var rs=message.payload
+------------------------
+rs
+
+
+so rs will be used to calling flow 
+
+---------------------------------------------------------------------
+Flatten:
+
+it will take array of array object and retunr single array
+flatten()
+
+Ex:-[
+  [
+    {
+      "name": "Shoki",
+      "id": 5678
+    },
+    {
+      "name": "Mariano",
+      "id": 9123
+    }
+  ],
+  [
+    {
+      "name": "Sai",
+      "id": 2001
+    },
+    {
+      "name": "Peter",
+      "id": 2002
+    }
+  ]
+]
+
+flatten(myData.user.myarray)
+
+Output:-
+[
+  {
+    "name": "Shoki",
+    "id": 5678
+  },
+  {
+    "name": "Mariano",
+    "id": 9123
+  },
+  {
+    "name": "Sai",
+    "id": 2001
+  },
+  {
+    "name": "Peter",
+    "id": 2002
+  }
+]
+
+------------------------------------------------
+Map:
+
+It will take array as input and return array it is used to iterate over the object/Item
+
+payload map ((item, index) -> item)
+
+------------------------------------------------
+Mapobject:-
+It will take object as input and return object it is used to iterate over the key value pair.
+myData mapObject ((value, key, index) -> (key):value)
+-------------------------------------------------
+FilterObject:-
+It will take object as input and return filter object asper match condition
+ payload filterObject ((value, key, index) -> key~='emp1')
+
+---------------------------------------------------
+filter:-
+It will take array input and return array asper match condition
+
+payload filter ((item, index) -> item.Adress.street==['2'])
+-------------------------------------------------
+orderBy:-
+it will take array and return in the sorted order array
+payload orderBy ((item, index) ->  item.Adress.street )
+[1,2,3,4,5,6] orderBy ((item, index) ->  -item )
+--------------------------------------------------------
+groupby:-
+it makes a group of specified element
+payload groupBy ((value, key) ->value.Adress.street )
+-------------------------------------------------------
+pluck:-
+it will take object and can retunr array of key or value
+payload pluck ((value, key, index) ->key )
+-----------------------------------------------------
